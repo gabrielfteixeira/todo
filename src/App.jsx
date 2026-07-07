@@ -1,30 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
   //State (estado)
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "Estudar prog",
-      description: "Estudar programação todos os dias",
-      isCompleted: false,
-    },
-    {
-      id: 2,
-      title: "Aprender matematica",
-      description: "Estudar programação todos os dias",
-      isCompleted: false,
-    },
-    {
-      id: 3,
-      title: "Estudar biologia",
-      description: "Estudar programação todos os dias",
-      isCompleted: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState(
+    JSON.parse(localStorage.getItem("tasks")) || [],
+  );
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  //useeffect com segundo parametro lista vazia [] é executado apenas uma vez, quando o componente é montado.
+  useEffect(() => {
+    async function fetchTasks() {
+      //CHAMA A API
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos?_limit=10",
+        {
+          method: "GET",
+        },
+      );
+      //PEGAR OS DADOS QUE ELA RETORNA
+      const data = await response.json();
+      console.log(data);
+      //ARMAZENAR/PERSISTIR ESSES DADOS NO STATE
+      //COMENTADO ABAIXO MAS É O QUE FAZ A API SER EXIBIDA
+      //setTasks(data);
+    }
+    fetchTasks();
+  }, []);
 
   function onTaskClick(taskId) {
     const newTasks = tasks.map((task) => {
