@@ -75,3 +75,5 @@ Currently, two official plugins are available:
 
 
 <img width="850" height="937" alt="image" src="https://github.com/user-attachments/assets/e10e9a7e-cac7-45e8-9f5b-5595702728d0" />
+
+curso - prof Felipe Rocha Youtube- dicasparadevs 
